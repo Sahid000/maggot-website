@@ -1,7 +1,5 @@
 import React from "react";
 import Container from "../ui/Container";
-import Image from "next/image";
-import { AllImages } from "../../../public/assets/AllImages";
 // import ComingSoonModal from "../ui/ComingSoonModal";
 import * as motion from "motion/react-client";
 import Revel from "../ui/Animation/Revel";
