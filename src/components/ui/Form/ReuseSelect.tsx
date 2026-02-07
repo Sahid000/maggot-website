@@ -49,7 +49,7 @@ const ReuseSelect = ({
         <Select
           mode={mode}
           className={cn(
-            "!h-10  !text-base-color !placeholder:text-[##B5B5B5] border !border-primary-color !ring-0 rounded-md ",
+            "!h-10  !text-base-color !placeholder:text-[##B5B5B5] bg-[#F7F8F8]! border-2 border-[#E6E7E6]! !ring-0 rounded-md ",
             selectClassName
           )}
           placeholder={placeholder}

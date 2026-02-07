@@ -5,12 +5,11 @@ import { useRef } from "react";
 import { useInView } from "framer-motion";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Button } from "antd";
-import Link from "next/link";
 import Container from "../ui/Container";
 import AnimatedUnderline from "../ui/AnimatedUnderline";
 import { AllImages } from "../../../public/assets/AllImages";
-import { BsCartCheck, BsCartCheckFill } from "react-icons/bs";
+import { BsCartCheck } from "react-icons/bs";
+import OrderNowButton from "./OrderNowButton";
 
 const intro = {
   hidden: { opacity: 0 },
@@ -111,12 +110,7 @@ const ProductOverview = () => {
               className="w-fit mt-5"
             >
               {" "}
-              <Link href="#order-now">
-                <Button className="group flex items-center !py-4 !px-2 gap-1 border-2 !border-secondary-color !bg-secondary-color !text-primary-color rounded-full">
-                  <p className="font-semibold mt-1">অর্ডার করতে চাই</p>
-                  <BsCartCheckFill className=" text-xl text-primary-color" />
-                </Button>
-              </Link>
+              <OrderNowButton />
             </motion.div>
           </div>
         </div>

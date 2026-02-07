@@ -1,9 +1,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
-import { BsCartCheckFill } from "react-icons/bs";
-import { Button } from "antd";
+import OrderNowButton from "@/components/Home/OrderNowButton";
 
 const MotiveOfTheProductCards = ({
   i,
@@ -66,12 +64,7 @@ const MotiveOfTheProductCards = ({
                   <span> {title}</span>
                 </h1>
                 <p className="text-black mb-5">{description}</p>
-                <Link href="#order-now">
-                  <Button className="group flex items-center !py-4 !px-2 gap-1 border-2 !border-secondary-color !bg-secondary-color !text-primary-color rounded-full">
-                    <p className="font-semibold mt-1">অর্ডার করতে চাই</p>
-                    <BsCartCheckFill className=" text-xl text-primary-color" />
-                  </Button>
-                </Link>
+                <OrderNowButton />
               </div>
 
               <div className="relative h-full overflow-hidden rounded-3xl">

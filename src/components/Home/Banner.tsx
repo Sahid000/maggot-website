@@ -2,9 +2,7 @@ import Container from "../ui/Container";
 import Revel from "../ui/Animation/Revel";
 import Image from "next/image";
 import { AllImages } from "../../../public/assets/AllImages";
-import Link from "next/link";
-import { Button } from "antd";
-import { BsCartCheckFill } from "react-icons/bs";
+import OrderNowButton from "./OrderNowButton";
 
 export default function Banner() {
   return (
@@ -26,12 +24,7 @@ export default function Banner() {
                 প্রানিটির সেই কষ্ট থেকে মুক্তি দিতে প্রস্তুত!
               </h4>
             </Revel>
-            <Link href="#order-now">
-              <Button className="group flex items-center !py-4 !px-2 gap-1 border-2 !border-secondary-color !bg-secondary-color !text-primary-color rounded-full">
-                <p className="font-semibold mt-1">অর্ডার করতে চাই</p>
-                <BsCartCheckFill className=" text-xl text-primary-color" />
-              </Button>
-            </Link>
+            <OrderNowButton />
           </div>
           <div className="flex justify-center items-center">
             <Image

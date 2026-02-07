@@ -1,32 +1,34 @@
 "use client";
+import { cn } from "@/lib/utils";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form } from "antd";
 import { ReactNode } from "react";
 
 type ReusableFormProps = {
-  onSubmit: (values: Record<string, any>) => void;
+  form?: any;
   children: ReactNode;
-  defaultValues?: Record<string, any>;
+  defaultValues?: any;
+  className?: string;
+  handleFinish: (values: any) => void;
+  onValuesChange?: (changedValues: any, allValues: any) => void; // ✅ new
 };
 
 const ReusableForm = ({
-  onSubmit,
+  form,
   children,
   defaultValues,
+  className,
+  handleFinish,
+  onValuesChange, // ✅ new
 }: ReusableFormProps) => {
-  const [form] = Form.useForm();
-
-  const handleFinish = (values: Record<string, any>) => {
-    onSubmit(values);
-    form.resetFields();
-  };
-
   return (
     <Form
       form={form}
       layout="vertical"
       initialValues={defaultValues}
       onFinish={handleFinish}
+      onValuesChange={onValuesChange} // ✅ allow value tracking
+      className={cn("space-y-1", className)}
     >
       {children}
     </Form>
