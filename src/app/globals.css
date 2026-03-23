@@ -67,3 +67,11 @@ body {
     margin-left: 0px; /* Reset margin-left to 0px */
   }
 }
+
+.button{
+  cursor: pointer;
+}
+
+button, [role="button"], [type="button"], [type="submit"] {
+  cursor: pointer;
+}

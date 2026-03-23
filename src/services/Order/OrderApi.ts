@@ -11,10 +11,24 @@ export const createOrder = async (req: { body: Record<string, unknown> }) => {
   return res.json();
 };
 
+export const getProduct = async () => {
+  const res = await fetch(`${BASE_URL}/product`, { cache: "no-store" });
+  return res.json();
+};
+
 export const getOrderByTrackingToken = async (id: string, t: string) => {
   const res = await fetch(
     `${BASE_URL}/orders/track?id=${encodeURIComponent(id)}&t=${encodeURIComponent(t)}`,
     { cache: "no-store" }
   );
+  return res.json();
+};
+
+export const validateCoupon = async (code: string, orderAmount: number) => {
+  const res = await fetch(`${BASE_URL}/coupons/validate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ code, orderAmount }),
+  });
   return res.json();
 };

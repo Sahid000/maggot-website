@@ -1,7 +1,14 @@
 import React from "react";
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getOrderByTrackingToken } from "@/services/Order/OrderApi";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "অর্ডার ট্র্যাক করুন",
+  description: "আপনার ম্যাগট-ফ্রি রেসকিউ কিট অর্ডারের বর্তমান অবস্থা ট্র্যাক করুন।",
+  robots: { index: false, follow: false },
+};
 
 const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL!;
 const CONTACT_PHONE = process.env.NEXT_PUBLIC_CONTACT_PHONE!;
@@ -151,25 +158,62 @@ const TrackPage = async ({
             {order.email && <Detail label="ইমেইল" value={order.email} />}
             <Detail label="জেলা" value={order.district} />
             <Detail label="ডেলিভারি এলাকা" value={order.insideDhaka ? "ঢাকার ভেতরে" : "ঢাকার বাইরে"} />
-            <Detail label="পরিমাণ" value={`${order.quantity} টি কিট`} />
-            <Detail label="প্রতি কিটের মূল্য" value={`৳${order.pricePerKit?.toLocaleString()}`} />
-            <div className="col-span-2">
-              <div className="rounded-xl bg-gray-50 border border-gray-200 px-4 py-3 flex items-center justify-between">
-                <span className="text-gray-500 text-sm">মোট পরিশোধযোগ্য</span>
-                <span className="text-xl font-bold text-gray-900">৳{order.totalPrice?.toLocaleString()}</span>
-              </div>
-            </div>
             <div className="col-span-2">
               <Detail label="ডেলিভারি ঠিকানা" value={order.address} />
             </div>
-            <div className="col-span-2">
-              <Detail
-                label="অর্ডারের তারিখ"
-                value={new Date(order.orderDate).toLocaleDateString("bn-BD", {
-                  year: "numeric", month: "long", day: "numeric",
-                })}
-              />
+            {order.note && (
+              <div className="col-span-2">
+                <Detail label="বিশেষ নির্দেশনা" value={order.note} />
+              </div>
+            )}
+          </div>
+
+          {/* ── Price Breakdown ── */}
+          <div
+            className="mt-5 rounded-xl overflow-hidden border"
+            style={{ borderColor: "#2d2d4e" }}
+          >
+            <div
+              className="px-4 py-2.5"
+              style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)" }}
+            >
+              <p className="text-yellow-400 text-xs font-semibold uppercase tracking-widest">মূল্য বিবরণ</p>
             </div>
+            <div className="divide-y divide-gray-100">
+              <PriceRow label={`প্রতি কিট × ${order.quantity}`} value={`৳${order.pricePerKit?.toLocaleString()} × ${order.quantity} = ৳${(order.pricePerKit * order.quantity)?.toLocaleString()}`} />
+              <PriceRow label="ডেলিভারি চার্জ" value={`৳${order.deliveryFee?.toLocaleString()}`} />
+              {order.couponCode && (
+                <div className="flex items-center justify-between px-4 py-2.5 text-sm">
+                  <span className="text-gray-500">
+                    কুপন ছাড়
+                    <span className="ml-1.5 font-mono text-xs bg-green-50 text-green-700 border border-green-200 px-1.5 py-0.5 rounded">{order.couponCode}</span>
+                  </span>
+                  <span className="font-semibold text-green-600">-৳{order.discountAmount?.toLocaleString()}</span>
+                </div>
+              )}
+              <div className="flex items-center justify-between px-4 py-3 bg-gray-50">
+                <span className="font-bold text-gray-800">মোট পরিশোধযোগ্য</span>
+                <span className="text-xl font-bold" style={{ color: "#1a1a2e" }}>৳{order.totalPrice?.toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Timestamps ── */}
+          <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
+            <Detail
+              label="অর্ডারের তারিখ"
+              value={new Date(order.orderDate).toLocaleString("bn-BD", {
+                year: "numeric", month: "long", day: "numeric",
+                hour: "2-digit", minute: "2-digit",
+              })}
+            />
+            <Detail
+              label="সর্বশেষ আপডেট"
+              value={new Date(order.updatedAt).toLocaleString("bn-BD", {
+                year: "numeric", month: "long", day: "numeric",
+                hour: "2-digit", minute: "2-digit",
+              })}
+            />
           </div>
         </div>
 
@@ -185,6 +229,13 @@ const TrackPage = async ({
     </div>
   );
 };
+
+const PriceRow = ({ label, value }: { label: string; value: string }) => (
+  <div className="flex items-center justify-between px-4 py-2.5 text-sm">
+    <span className="text-gray-500">{label}</span>
+    <span className="font-medium text-gray-800">{value}</span>
+  </div>
+);
 
 const Detail = ({ label, value }: { label: string; value: string }) => (
   <div>

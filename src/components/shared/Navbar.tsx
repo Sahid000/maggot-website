@@ -15,7 +15,7 @@ const NavItems = [
   { id: "2", name: "কার্যকারিতা", route: "#how-it-works" },
   { id: "3", name: "কিট সম্পর্কে", route: "#kit" },
   { id: "4", name: "সাধারণ জিজ্ঞাসা", route: "#faq" },
-  { id: "5", name: "যোগাযোগ", route: "/contact-us" },
+  { id: "5", name: "যোগাযোগ", route: "#contact-us" },
 ];
 
 const Navbar: React.FC = () => {
