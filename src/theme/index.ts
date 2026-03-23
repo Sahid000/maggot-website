@@ -8,6 +8,10 @@ export const mainTheme = {
       colorPrimary: "#273D62",
       colorPrimaryHover: "#273D62",
     },
+    Modal: {
+      zIndexBase: 999999,
+      titleFontSize: 25,
+    },
     Select: {
       // colorTextQuaternary: "#ffffff",
       colorBgContainer: "rgba(0,0,0,0)",

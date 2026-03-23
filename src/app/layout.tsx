@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "sonner";
 import { ConfigProvider } from "antd";
 import { mainTheme } from "@/theme";
@@ -77,23 +76,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${notoSansBengali.variable} antialiased`}>
-        <NextTopLoader
-          color="#273D62"
-          initialPosition={0.08}
-          crawlSpeed={200}
-          height={3}
-          crawl={true}
-          showSpinner={true}
-          easing="ease-in-out"
-          speed={200}
-          shadow="0 0 10px #273D62,0 0 5px #273D62"
-          template='<div className="bar" role="bar"><div className="peg"></div></div> 
-  <div className="spinner" role="spinner"><div className="spinner-icon"></div></div>'
-          zIndex={1600}
-          showAtBottom={false}
-        />
-        <Toaster position="top-center" richColors />
         <AntdRegistry>
+          <Toaster position="top-center" richColors />
           <ConfigProvider theme={mainTheme}>{children}</ConfigProvider>
         </AntdRegistry>
       </body>

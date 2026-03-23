@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useState, useEffect } from "react";
-import { Form, Modal } from "antd";
+import React, { useState } from "react";
+import { Form } from "antd";
 
 import ReusableForm from "@/components/ui/Form/ReuseForm";
 import ReuseInput from "@/components/ui/Form/ReuseInput";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import ReuseSelect from "@/components/ui/Form/ReuseSelect";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { createOrder } from "@/services/Order/OrderApi";
 import { FiMinus, FiPlus, FiTruck, FiPackage, FiCheckCircle } from "react-icons/fi";
+import Container from "@/components/ui/Container";
 
 // ── Update this when price changes ──────────────────────────
 const PRICE_PER_KIT = 230; // BDT
@@ -31,36 +32,13 @@ const BANGLADESH_DISTRICTS = [
     "Thakurgaon",
 ].map((d) => ({ label: d, value: d }));
 
-const ViewOrderNowModal = ({
-    isModalVisible,
-}: {
-    isModalVisible: boolean;
-}) => {
-    const searchParams = useSearchParams();
-    const pathName = usePathname();
+const OrderPage = () => {
     const router = useRouter();
-    const { replace } = router;
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [quantity, setQuantity] = useState(1);
 
-    useEffect(() => {
-        if (isModalVisible) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "";
-        }
-        return () => { document.body.style.overflow = ""; };
-    }, [isModalVisible]);
-
     const totalPrice = PRICE_PER_KIT * quantity;
-
-
-    const handleCancel = () => {
-        const params = new URLSearchParams(searchParams);
-        params.delete("order");
-        replace(`${pathName}?${params.toString()}`, { scroll: false });
-    };
 
     const changeQuantity = (delta: number) => {
         setQuantity((prev) => Math.max(1, prev + delta));
@@ -83,34 +61,23 @@ const ViewOrderNowModal = ({
             const orderId = res.data?.orderId;
             const trackingToken = res.data?.trackingToken;
 
-            // Session cookie — no expires/maxAge so it clears when browser closes
             if (trackingToken) {
                 document.cookie = `maggot_order_token=${trackingToken}; path=/; SameSite=Lax`;
             }
 
             form.resetFields();
             setQuantity(1);
-            handleCancel();
             router.push(`/track?id=${orderId}`);
         }
     };
 
     return (
-        <Modal
-            open={isModalVisible}
-            onCancel={() => {
-                handleCancel();
-                form.resetFields();
-                setQuantity(1);
-            }}
-            footer={null}
-            centered
-            width={860}
-        >
-            <div className="">
+        <div className="min-h-screen pt-24 pb-12 px-4">
+            <Container>
+
                 {/* ── Header ───────────────────────────────────────────── */}
                 <div
-                    className="rounded-t-xl px-8 pt-7 pb-6"
+                    className="rounded-t-2xl px-8 pt-7 pb-6"
                     style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)" }}
                 >
                     <div className="flex flex-wrap items-start justify-between gap-3">
@@ -153,9 +120,9 @@ const ViewOrderNowModal = ({
                 </div>
 
                 {/* ── Form Body ────────────────────────────────────────── */}
-                <div className="px-8 py-6 bg-white">
+                <div className="px-8 py-6 ">
                     <ReusableForm form={form} handleFinish={handleSubmit}>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10">
 
                             <ReuseInput
                                 name="name"
@@ -192,6 +159,7 @@ const ViewOrderNowModal = ({
                             />
 
                             <ReuseSelect
+
                                 name="district"
                                 label="জেলা *"
                                 placeholder="আপনার জেলা বেছে নিন"
@@ -214,7 +182,6 @@ const ViewOrderNowModal = ({
                                 labelClassName="!font-semibold !text-gray-700"
                             />
 
-                            {/* Spacer on desktop to keep address full-width below */}
                             <div className="hidden md:block" />
 
                             <div className="md:col-span-2">
@@ -309,9 +276,10 @@ const ViewOrderNowModal = ({
 
                     </ReusableForm>
                 </div>
-            </div>
-        </Modal>
+
+            </Container>
+        </div>
     );
 };
 
-export default ViewOrderNowModal;
+export default OrderPage;

@@ -47,7 +47,7 @@ const ReuseInput = ({
         {inputType === "password" ? (
           <Input.Password
             className={cn(
-              "!py-1.5 !px-3 !text-lg !bg-primary-color border !border-primary-color !text-base-color rounded-lg",
+              "!py-1.5 !px-3 !text-lg !bg-primary-color border !border-secondary-color/50 !text-base-color rounded-lg",
               inputClassName
             )}
             placeholder={placeholder}
@@ -56,7 +56,7 @@ const ReuseInput = ({
         ) : inputType === "textarea" ? (
           <Input.TextArea
             className={cn(
-              "!py-1.5 !px-3 !text-lg !bg-primary-color border !border-primary-color !text-base-color rounded-lg",
+              "!py-1.5 !px-3 !text-lg !bg-primary-color border !border-secondary-color/50 !text-base-color rounded-lg",
               inputClassName
             )}
             rows={rows}
@@ -66,7 +66,7 @@ const ReuseInput = ({
         ) : (
           <Input
             className={cn(
-              "!py-1.5 !px-3 !text-lg !bg-primary-color border !border-primary-color !text-base-color rounded-lg",
+              "!py-1.5 !px-3 !text-lg !bg-primary-color border !border-secondary-color/50 !text-base-color rounded-lg",
               inputClassName
             )}
             placeholder={placeholder}
