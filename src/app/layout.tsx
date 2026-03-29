@@ -45,20 +45,11 @@ export const metadata: Metadata = {
     siteName,
     title: `${siteName} | কুকুরের ক্ষত থেকে ম্যাগট নির্মূলের সমাধান`,
     description: siteDescription,
-    images: [
-      {
-        url: "/assets/images/product.png",
-        width: 1200,
-        height: 630,
-        alt: "ম্যাগট-ফ্রি রেসকিউ কিট",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${siteName} | কুকুরের ক্ষত থেকে ম্যাগট নির্মূলের সমাধান`,
     description: siteDescription,
-    images: ["/assets/images/product.png"],
   },
   robots: {
     index: true,

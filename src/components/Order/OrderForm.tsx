@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState } from "react";
-import { Form } from "antd";
+import { Checkbox, Form } from "antd";
+import Link from "next/link";
+import { toast } from "sonner";
 
 import ReusableForm from "@/components/ui/Form/ReuseForm";
 import ReuseInput from "@/components/ui/Form/ReuseInput";
@@ -173,7 +175,11 @@ const OrderForm = ({ product }: { product: ProductConfig }) => {
 
             {/* ── Form Body ────────────────────────────────────────── */}
             <div className="px-8 py-6">
-                <ReusableForm form={form} handleFinish={handleSubmit}>
+                <ReusableForm
+                    form={form}
+                    handleFinish={handleSubmit}
+                    onFinishFailed={() => toast.error("সকল আবশ্যক তথ্য পূরণ করুন")}
+                >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10">
 
                         <ReuseInput
@@ -422,6 +428,53 @@ const OrderForm = ({ product }: { product: ProductConfig }) => {
                                 <p className="text-green-300 text-xs font-medium">
                                     ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে পরিশোধ করুন
                                 </p>
+                            </div>
+
+                            {/* Terms Checkbox */}
+                            <div className="rounded-xl border border-white/15 bg-white/5 px-4 py-3.5">
+                                <Form.Item
+                                    name="termsAgreed"
+                                    valuePropName="checked"
+                                    rules={[
+                                        {
+                                            validator: (_, value) =>
+                                                value
+                                                    ? Promise.resolve()
+                                                    : Promise.reject("অর্ডার দিতে শর্তাবলীতে সম্মত হওয়া আবশ্যক"),
+                                        },
+                                    ]}
+                                    className="!mb-0"
+                                >
+                                    <Checkbox>
+                                        <span className="text-white/80 text-[13px] leading-relaxed select-none">
+                                            আমি{" "}
+                                            <Link
+                                                href="/terms"
+                                                target="_blank"
+                                                className="text-yellow-400 font-semibold hover:text-yellow-300 underline underline-offset-2 decoration-yellow-400/50"
+                                            >
+                                                শর্তাবলী
+                                            </Link>
+                                            ,{" "}
+                                            <Link
+                                                href="/privacy"
+                                                target="_blank"
+                                                className="text-yellow-400 font-semibold hover:text-yellow-300 underline underline-offset-2 decoration-yellow-400/50"
+                                            >
+                                                গোপনীয়তা নীতি
+                                            </Link>{" "}
+                                            এবং{" "}
+                                            <Link
+                                                href="/return-policy"
+                                                target="_blank"
+                                                className="text-yellow-400 font-semibold hover:text-yellow-300 underline underline-offset-2 decoration-yellow-400/50"
+                                            >
+                                                রিটার্ন নীতি
+                                            </Link>{" "}
+                                            পড়েছি এবং সম্মত আছি
+                                        </span>
+                                    </Checkbox>
+                                </Form.Item>
                             </div>
 
                             {/* Submit */}

@@ -10,7 +10,8 @@ type ReusableFormProps = {
   defaultValues?: any;
   className?: string;
   handleFinish: (values: any) => void;
-  onValuesChange?: (changedValues: any, allValues: any) => void; // ✅ new
+  onValuesChange?: (changedValues: any, allValues: any) => void;
+  onFinishFailed?: (errorInfo: any) => void;
 };
 
 const ReusableForm = ({
@@ -19,7 +20,8 @@ const ReusableForm = ({
   defaultValues,
   className,
   handleFinish,
-  onValuesChange, // ✅ new
+  onValuesChange,
+  onFinishFailed,
 }: ReusableFormProps) => {
   return (
     <Form
@@ -27,7 +29,8 @@ const ReusableForm = ({
       layout="vertical"
       initialValues={defaultValues}
       onFinish={handleFinish}
-      onValuesChange={onValuesChange} // ✅ allow value tracking
+      onFinishFailed={onFinishFailed}
+      onValuesChange={onValuesChange}
       className={cn("space-y-1", className)}
     >
       {children}

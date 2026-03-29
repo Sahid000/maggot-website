@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { getProduct } from "@/services/Order/OrderApi";
 
 export const metadata: Metadata = {
-  title: "অর্ডার করুন",
-  description:
-    "এখনই ম্যাগট-ফ্রি রেসকিউ কিট অর্ডার করুন। ঢাকার ভেতরে ও বাইরে দ্রুত ডেলিভারি। অনলাইনে সহজে অর্ডার করুন এবং ঘরে বসে পান।",
-  alternates: {
-    canonical: "/order",
-  },
+    title: "অর্ডার করুন",
+    description:
+        "এখনই ম্যাগট-ফ্রি রেসকিউ কিট অর্ডার করুন। ঢাকার ভেতরে ও বাইরে দ্রুত ডেলিভারি। অনলাইনে সহজে অর্ডার করুন এবং ঘরে বসে পান।",
+    alternates: {
+        canonical: "/order",
+    },
 };
 import OrderForm from "@/components/Order/OrderForm";
 import VisitTracker from "@/components/Order/VisitTracker";

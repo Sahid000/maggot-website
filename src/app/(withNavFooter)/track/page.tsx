@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getOrderByTrackingToken } from "@/services/Order/OrderApi";
 import Link from "next/link";
+import InvoiceDownloadButton from "@/components/Order/InvoiceDownloadButton";
 
 export const metadata: Metadata = {
   title: "অর্ডার ট্র্যাক করুন",
@@ -92,7 +93,10 @@ const TrackPage = async ({
             ম্যাগট-ফ্রি রেসকিউ কিট
           </p>
           <h1 className="text-2xl font-bold text-white">অর্ডার ট্র্যাক করুন</h1>
-          <p className="text-gray-400 text-xs mt-1">অর্ডার আইডি: {order.orderId}</p>
+          <div className="flex items-center justify-between mt-1">
+            <p className="text-gray-400 text-xs">অর্ডার আইডি: {order.orderId}</p>
+            <InvoiceDownloadButton orderId={order.orderId} trackingToken={t} />
+          </div>
 
           {/* Status badge */}
           <div
